@@ -71,8 +71,15 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  int num = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +102,25 @@ class CartPage extends StatelessWidget {
             child: Text('Goto CheckOut Page'),
           ),
           ElevatedButton(
+            onPressed: () {
+              Get.offAll(HomePage());
+            },
+            child: Text('Go to Home'),
+          ),
+          Text(
+            num.toString(),
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10),
+          ElevatedButton(
               onPressed: () {
-                Get.offAll(HomePage());
+                setState(() {});
+                num++;
               },
-              child: Text('Go to Home'))
+              child: Text('Increase'))
         ],
       )),
     );
