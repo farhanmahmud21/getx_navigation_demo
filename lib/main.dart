@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  CounterController counterController = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +40,31 @@ class HomePage extends StatelessWidget {
               },
               child: Text('Goto Cart Page')),
           ElevatedButton(
+            onPressed: () {
+              Get.to(CheckOutPage());
+              //Get.off(CartPage());
+              //Get.offAll(CartPage());
+              //Get.back();
+            },
+            child: Text('Goto CheckOut Page'),
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Obx(
+            () => Text(
+              counterController.count.toString(),
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          ElevatedButton(
               onPressed: () {
-                Get.to(CheckOutPage());
-                //Get.off(CartPage());
-                //Get.offAll(CartPage());
-                //Get.back();
+                counterController.increase();
               },
-              child: Text('Goto CheckOut Page')),
+              child: Text('Increase Count'))
         ],
       )),
     );
@@ -117,5 +136,13 @@ class CheckOutPage extends StatelessWidget {
         ],
       )),
     );
+  }
+}
+
+class CounterController extends GetxController {
+  RxInt count = 0.obs;
+
+  void increase() {
+    count++;
   }
 }
